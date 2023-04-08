@@ -14,8 +14,8 @@ int main()
         for (int i = 0;(i < 32) && (flag == 0) && num >= limit; i++)
         {
             flag = !(num ^ (1 << i));
-            limit = pow(2,i);//1024
-            printf("flag %d\n",limit);
+            limit = pow(2,i);
+            //printf("flag %d\n",limit);
         }
         if (flag != 0)
         {
