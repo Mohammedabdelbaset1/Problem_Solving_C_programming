@@ -5,17 +5,19 @@
 #include<time.h>
 /*****************************Define**********************************/
 #define N 9
-#define Empty_Grid 53
+#define minimum_num_of_clues 17
+#define maximum_num_of_clues 77
 /**************************Data Types*********************************/
-int  Board[N][N]={       0,9,0,4,0,0,2,0,0,
-                         8,0,1,0,9,0,4,0,0,
-                         4,0,3,0,1,0,0,0,0,
-                         0,0,6,0,0,0,0,9,2,
-                         0,0,0,1,0,7,0,0,0,
-                         5,8,0,0,0,0,7,0,0,
-                         0,0,0,0,4,0,1,0,5,
-                         0,0,8,0,5,0,6,0,7,
-                         0,0,5,0,0,8,0,2,0
+int  Board[N][N] = {
+                         6,9,7,4,3,5,2,1,8,
+                         8,5,1,7,9,2,4,6,3,
+                         4,2,3,8,1,6,5,7,9,
+                         1,7,6,5,8,4,3,9,2,
+                         9,3,4,1,2,7,8,5,6,
+                         5,8,2,3,6,9,7,4,1,
+                         7,6,9,2,4,3,1,8,5,
+                         2,4,8,9,5,1,6,3,7,
+                         3,1,5,6,7,8,9,2,4
                         };
 int Solved_Board[N][N]={
                          6,9,7,4,3,5,2,1,8,
@@ -28,8 +30,8 @@ int Solved_Board[N][N]={
                          2,4,8,9,5,1,6,3,7,
                          3,1,5,6,7,8,9,2,4
                         };
-
-int rest_of_empty_grids = Empty_Grid;
+int Num_of_clues;
+int Rest_of_empty_Clues;
 typedef enum Error
 {
     OK ,
@@ -41,23 +43,24 @@ typedef enum Error
 
 typedef enum Bool
 {
-    False ,
+    FALSE ,
     TRUE ,
 
 }Bool;
 
 /**************************Function prototypes***************************/
 void Suduko_print_pattern(int Board[N][N]);
-void Suduko_Generate_pattern(int Board[N][N]);
+int Suduko_Generate_pattern(int Board[N][N],int Solved_Board[N][N]);
 Error Suduko(int Board[N][N]);
 Error Sudoku_check_Row_Col_Block(int r , int c , int  Board[N][N], int num);
-Bool solvePuzzle(int board[N][N]);
 
 /**************************Function Definitions***************************/
 int main() 
 {
     Error e;
     //Suduko_Generate_pattern(Board);
+    Num_of_clues = Suduko_Generate_pattern(Board,Solved_Board);
+    Rest_of_empty_Clues = Num_of_clues;
     while(1)
     {
         e = Suduko(Board);
@@ -76,7 +79,7 @@ int main()
             printf("\x1b[0m");
         }
 
-        if (rest_of_empty_grids == 0)
+        if (Rest_of_empty_Clues == 0)
         {
             printf("\x1b[32m");
             printf("Congratulations Suduko Solved Successfully \n");
@@ -131,7 +134,7 @@ Error Suduko(int Board[N][N])
                     if((error_Row_Col_Block == OK) && (num == Solved_Board[row][col]))
                     {
                         Board[row][col] = num;
-                        rest_of_empty_grids --;
+                        Rest_of_empty_Clues --;
                     
 
                     }
@@ -230,40 +233,24 @@ Error Sudoku_check_Row_Col_Block(int r , int c , int  Board[N][N], int num)
     return error;
 }
 
-void Suduko_Generate_pattern(int Board[N][N])
+int Suduko_Generate_pattern(int Board[N][N],int Solved_Board[N][N])
 {
-    Error e = OK;
+    int clues_num;
     srand(time(NULL));
+    do
+    {
+        clues_num = (rand() % (maximum_num_of_clues - minimum_num_of_clues + 1));
+    } while (clues_num < minimum_num_of_clues);
+    
+    
+    printf("clues num %d\n",clues_num);
+
     //initializing board array with zeros 
-    for(int i = 0; i < N; i++)
+    for(int i = 0; i < clues_num; i++)
     {
-        for(int j = 0; j < N; j++)
-        {
-            Board[i][j] = 0;
-        }
-    }
-
-    for(int i = 0; i < N; i++)
-    {
-        for(int j = 0; j < N; j++)
-        {
-            do
-            {
-                int val = rand() % N + 1;
-                //printf("val = %d",val);
-                e = Sudoku_check_Row_Col_Block(i,j,Board,val);
-                //printf("e = %d", e);
-                if (e == OK )
-                {
-                    Board[i][j] = val;
-                    break;
-                }
-
-            }while (e != OK);
-            
-
-        }
-    }
+        Board[rand() % N][rand() % N] = 0;
+    } 
+    return clues_num;
 }
 
 
