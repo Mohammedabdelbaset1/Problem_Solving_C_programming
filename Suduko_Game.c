@@ -70,35 +70,40 @@ int main()
 
             system("cls");
             //printf("\x1b[32m");
-            printf(GRNB "Well Done\n" reset);
+            printf(GRNB "Well Done" reset);
+            printf("\n");
             //printf("\x1b[0m");
         }
         else if (e == WRONG)
         {
             system("cls");
             //printf("\x1b[31m");
-            printf(REDB "Wrong Input\n" reset);
+            printf(REDB "Wrong Input" reset);
+            printf("\n");
             //printf("\x1b[0m");
         }
         else if (e == INVALID)
         {
             system("cls");
             //printf("\x1b[31m");
-            printf(REDB "Invalid Place\n" reset);
+            printf(REDB "Invalid Place" reset);
+            printf("\n");
             //printf("\x1b[0m");
         }
         else if (e == forbidden)
         {
             system("cls");
             //printf("\x1b[31m");
-            printf(REDB "Forbidden Input\n" reset);
+            printf(REDB "Forbidden Input" reset);
+            printf("\n");
             //printf("\x1b[0m");
         }
         else
         {
             system("cls");
             //printf("\x1b[31m");
-            printf(REDB "Error\n" reset);
+            printf(REDB "Error" reset);
+            printf("\n");
             //printf("\x1b[0m");
             break;
         }
@@ -107,7 +112,8 @@ int main()
         if (Rest_of_empty_Clues == 0)
         {
             //printf("\x1b[32m");
-            printf(GRNB "Congratulations Suduko Solved Successfully \n" reset);
+            printf(GRNB "Congratulations Suduko Solved Successfully" reset);
+            printf("\n");
             //printf("\x1b[0m");
 
             break;
@@ -121,7 +127,7 @@ Error Suduko(int Board[N][N])
     int num, row, col;
     Error error_Row_Col_Block = OK, error = OK;
     Suduko_print_pattern(Board);
-    printf("Enter Row Num: ");
+    printf(BLU "Enter Row Num: " reset);
     scanf("%d", &row);
     if (row < 0 || row > N)
     {
@@ -129,7 +135,7 @@ Error Suduko(int Board[N][N])
         return error;
     }
 
-    printf("Enter Row Num: ");
+    printf(BLU "Enter Col Num: " reset);
     scanf("%d", &col);
     if (col < 0 || col > N)
     {
@@ -141,7 +147,7 @@ Error Suduko(int Board[N][N])
         error = INVALID;
         return error;   
     }
-    printf("Enter Value: ");
+    printf(WHT "Enter Value: "reset);
     scanf("%d", &num);
     error_Row_Col_Block = Sudoku_check_Row_Col_Block(row, col, Board, num);
 
@@ -159,7 +165,8 @@ Error Suduko(int Board[N][N])
 void Suduko_print_pattern(int Board[N][N])
 {
 
-    printf(CYN " R/C|  0  1  2 |  3  4  5 |  6  7  8 |\n" reset);
+    printf(BLUHB " R/C|  0  1  2 |  3  4  5 |  6  7  8 |" reset);
+    printf("\n");
     for (int i = 0; i < N; i++)
     {
         if (i == 0 || i == 3 || i == 6)
@@ -170,7 +177,7 @@ void Suduko_print_pattern(int Board[N][N])
         {
             if (j == 0)
             {
-                printf("%3d", i);
+                printf(BLUHB " %d " reset, i);
             }
 
             if (j == 0 || j == 3 || j == 6)
